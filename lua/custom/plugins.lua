@@ -46,31 +46,31 @@ local plugins = {
       require("better_escape").setup()
     end,
   },
-  -- {
-  --   'barrett-ruth/live-server.nvim',
-  --   build = 'yarn global add live-server',
-  --   config = function()
-  --     require "custom.configs.liveserver"
-  --     return true
-  --   end,
-  --   lazy = false,
-  -- },
   {
-    "aurum77/live-server.nvim",
-    build = function()
-      require("live_server.util").install()
-    end,
-    config = function()
-      require "custom.configs.liveserver"
-    end,
-    cmd = {
-      "LiveServer",
-      "LiveServerStart",
-      "LiveServerStop",
-      "LiveServerInstall",
-    },
-    lazy = false,
-  },
+     'barrett-ruth/live-server.nvim',
+     build = 'npm install -g live-server',
+     config = function()
+       require "custom.configs.liveserver"
+       return true
+     end,
+     cmd = { "LiveServerStart", "LiveServerStop" },
+   },
+  --{
+  --  "aurum77/live-server.nvim",
+  --  build = function()
+  --    require("live_server.util").install()
+  --  end,
+  --  config = function()
+  --    require "custom.configs.liveserver"
+  --  end,
+  --  cmd = {
+  --    "LiveServer",
+  --    "LiveServerStart",
+  --    "LiveServerStop",
+  --    "LiveServerInstall",
+  --  },
+  --  lazy = false,
+  -- },
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",

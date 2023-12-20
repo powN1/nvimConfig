@@ -1,1 +1,1 @@
-require('live_server').setup()
+require('live-server').setup()
