@@ -40,7 +40,12 @@ M.capabilities.textDocument.completion.completionItem = {
     },
   },
 }
-
+---UFO Setup (lsp as main provider). With lsp as main provider it lets you fold arrays/lists and with treesitter it doesn't
+M.capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
+---------------------------------------------
 require("lspconfig").lua_ls.setup {
   on_attach = M.on_attach,
   capabilities = M.capabilities,

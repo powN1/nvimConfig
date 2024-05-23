@@ -96,18 +96,16 @@ local default_plugins = {
       vim.api.nvim_create_autocmd({ "BufRead" }, {
         group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
         callback = function()
-          vim.fn.jobstart({"git", "-C", vim.loop.cwd(), "rev-parse"},
-            {
-              on_exit = function(_, return_code)
-                if return_code == 0 then
-                  vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
-                  vim.schedule(function()
-                    require("lazy").load { plugins = { "gitsigns.nvim" } }
-                  end)
-                end
+          vim.fn.jobstart({ "git", "-C", vim.loop.cwd(), "rev-parse" }, {
+            on_exit = function(_, return_code)
+              if return_code == 0 then
+                vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
+                vim.schedule(function()
+                  require("lazy").load { plugins = { "gitsigns.nvim" } }
+                end)
               end
-            }
-          )
+            end,
+          })
         end,
       })
     end,
@@ -189,6 +187,15 @@ local default_plugins = {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
       },
+      -- {
+      --   "roobert/tailwindcss-colorizer-cmp.nvim",
+      --   -- optionally, override the default options:
+      --   config = function()
+      --     require("tailwindcss-colorizer-cmp").setup {
+      --       color_square_width = 2,
+      --     }
+      --   end,
+      -- },
     },
     opts = function()
       return require "plugins.configs.cmp"
@@ -210,6 +217,12 @@ local default_plugins = {
     },
     init = function()
       require("core.utils").load_mappings "comment"
+    end,
+
+    -- Load opts from custom configs -----------------
+    opts = function()
+      return require "custom.configs.comment"
+      --------------------------------------------------
     end,
     config = function(_, opts)
       require("Comment").setup(opts)

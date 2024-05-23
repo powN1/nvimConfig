@@ -1,19 +1,9 @@
-import React from "React";
+import React from 'react'
 
-const myComp = () => {
-  const liczba = 123;
+export const script = (props : {}) => {
   return (
-    <>
-      <div>
-        <div></div>
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </div>
-      <h1></h1>
-      <div></div>
-    </>
-  );
-};
+    <div>
+      
+    </div>
+  )
+}

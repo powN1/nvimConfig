@@ -45,6 +45,8 @@ local options = {
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
     mappings = {
+      -- Exit telescopy by pressing ESC when in insert mode
+      i = { ["<ESC>"] = require("telescope.actions").close },
       n = { ["q"] = require("telescope.actions").close },
     },
   },

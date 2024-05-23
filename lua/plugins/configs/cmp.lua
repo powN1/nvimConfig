@@ -18,19 +18,19 @@ local formatting_style = {
     local icons = require "nvchad.icons.lspkind"
     local icon = (cmp_ui.icons and icons[item.kind]) or ""
 
-    -- A function to check which specific lsp is active (tsserver, emmet etc) 
+    -- A function to check which specific lsp is active (tsserver, emmet etc)
     -- so it can be displayed in a dropdown menu when autocompleting.
 
-    lspserver_name = ""
+    local lspserver_name = ""
     local function checkLspName()
-      if _.source.name == 'nvim_lsp' then
+      if _.source.name == "nvim_lsp" then
         -- Display which LSP servers this item came from.
         pcall(function()
           local lspName = _.source.source.client.name
-          if lspName == 'tsserver' then
-            lspserver_name = 'TSS'
-          elseif lspName == 'emmet_ls' then
-            lspserver_name = 'Emmet'
+          if lspName == "tsserver" then
+            lspserver_name = "TSS"
+          elseif lspName == "emmet_language_server" then
+            lspserver_name = "Emmet"
           else
             lspserver_name = _.source.source.client.name
           end
@@ -72,11 +72,47 @@ local function border(hl_name)
 end
 
 local options = {
+  -- Disabled autocompletion when writing comments, strings and in Telescope Prompt (input)!
+  enabled = function()
+    -- Telescope Prompt
+    buftype = vim.api.nvim_buf_get_option(0, "buftype")
+    if buftype == "prompt" then
+      return false
+    end
+
+    -- Comments and strings
+
+    -- Function for checking if substring exists in the main string (returns true or false)
+    function hasSubstring(mainString, subString)
+      return string.find(mainString, subString) ~= nil
+    end
+
+    -- Get current line string
+    local currentLineText = vim.api.nvim_get_current_line()
+
+    -- Check if in the current line there is a word import or className
+    local importFound = hasSubstring(currentLineText, "import")
+    local classNameFound = hasSubstring(currentLineText, "className")
+
+    local context = require "cmp.config.context"
+
+    -- Check if current line is a comment and if it is then disable autocompletion
+    if context.in_treesitter_capture "comment" or context.in_syntax_group "Comment" then
+      return false
+    -- Check if it's an import statement and if it is enable autocompletion
+    elseif (context.in_treesitter_capture "string" or context.in_syntax_group "String") and importFound then
+      return true
+    -- Check if it's a className property and if it is enable autocompletion (for tailwindcss)
+    elseif (context.in_treesitter_capture "string" or context.in_syntax_group "String") and classNameFound then
+      return true
+    else
+      return true
+    end
+  end,
+
   completion = {
-    completeopt = "menu,menuone",
-
+    completeopt = "menu,menuone,noselect",
   },
-
   window = {
     completion = {
       side_padding = (cmp_style ~= "atom" and cmp_style ~= "atom_colored") and 1 or 0,
@@ -86,7 +122,6 @@ local options = {
     documentation = {
       border = border "CmpDocBorder",
       winhighlight = "Normal:CmpDoc",
-
     },
   },
   snippet = {
@@ -108,7 +143,7 @@ local options = {
     ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
+      select = false,
     },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -136,9 +171,9 @@ local options = {
     }),
   },
   sources = {
-    { name = "nvim_lsp" },
+    { name = "nvim_lsp", trigger_characters = { "-" } },
     { name = "luasnip" },
-    { name = "buffer" },
+    { name = "buffer", keyword_length = 5 },
     { name = "nvim_lua" },
     { name = "path" },
   },

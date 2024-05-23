@@ -1,11 +1,9 @@
+import React from "react";
 
-
-const Calculator = () => {
-  render(
+export const script = () => {
+  
+  return (
     <div>
-      <ul>
-        <li></li>
-      </ul>
     </div>
-  )
-}
+  );
+};
