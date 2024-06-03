@@ -6,11 +6,7 @@ if custom_init_path then
   dofile(custom_init_path)
 end
 
--- Don't run this when neovim is opened by vscode (if u run this when vscode opens neovim then you won't be able to
--- skip folds (by navigating with a cursor vertically)
-if not vim.g.vscode then
-  require("core.utils").load_mappings()
-end
+require("core.utils").load_mappings()
 
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
@@ -29,6 +25,5 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "BufEnter" }, {
     vim.opt.formatoptions = vim.opt.formatoptions - { "c", "r", "o" }
   end,
 })
-
 -- end
 

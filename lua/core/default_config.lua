@@ -89,4 +89,10 @@ M.lazy_nvim = require "plugins.configs.lazy_nvim" -- config for lazy.nvim startu
 
 M.mappings = require "core.mappings"
 
+-- if vim.g.vscode then
+-- M.ui["statusline"] = {
+--   theme = "default"
+-- }
+-- end
+
 return M

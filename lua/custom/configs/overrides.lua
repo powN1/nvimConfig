@@ -38,20 +38,6 @@ M.treesitter = {
     -- Enable treesitter playground plugin
     enable = true,
   },
-  autotag = {
-    enable = true,
-    filetypes = {
-      "html",
-      "javascript",
-      "typescript",
-      "javascriptreact",
-      "typescriptreact",
-      "svelte",
-      "vue",
-      "tsx",
-      "jsx",
-    },
-  },
 }
 
 M.mason = {

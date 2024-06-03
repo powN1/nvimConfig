@@ -1,6 +1,14 @@
 ---@type ChadrcConfig
 local M = {}
 
+
+local VSCodeRunning = false
+if vim.g.vscode then
+  VSCodeRunning = true
+else
+  VSCodeRunning = false
+end
+
 -- Path to overriding theme and highlights files
 local highlights = require "custom.highlights"
 
@@ -23,7 +31,8 @@ M.ui = {
   --   },
   -- },
   nvdash = {
-    load_on_startup = true,
+    -- Check if vscode is running and if yes then don't fload the dashboard on startup
+    load_on_startup = not VSCodeRunning,
     header = {
       "   ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣭⣿⣶⣿⣦⣼⣆         ",
       "    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ",
@@ -66,6 +75,7 @@ vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#179FFF" })
 vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#0ac007" })
 vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#DA70D6" })
 vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#38dcdd" })
+
 -- UFO arrows
 vim.api.nvim_set_hl(0, "FoldColumn", { fg = "#777777", bg = "NONE" })
 M.plugins = "custom.plugins"

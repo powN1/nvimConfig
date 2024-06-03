@@ -1,6 +1,37 @@
 ---@type MappingsTable
 local M = {}
 
+-- Keymaps for vscode if running
+if vim.g.vscode then
+  vim.g.mapleader = ' '
+
+  require('hackKeymap')
+
+  vim.api.nvim_set_keymap('n', '<leader>ff', ':call VSCodeNotify("workbench.action.quickOpen") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>x', ':call VSCodeNotify("workbench.action.closeActiveEditor") <CR>', { noremap = true, silent = true })
+
+  vim.api.nvim_set_keymap('n', '<leader>ca', ':call VSCodeNotify("editor.action.codeAction") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>fa', ':call VSCodeNotify("editor.action.rename") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>fw', ':call VSCodeNotify("workbench.action.findInFiles") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>te', ':call VSCodeNotify("workbench.actions.view.problems") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>tt', ':call VSCodeNotify("workbench.action.terminal.toggleTerminal") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>tp', ':call VSCodeNotify("workbench.action.togglePanel") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'gr', ':call VSCodeNotify("editor.action.goToReferences") <CR>', { noremap = true, silent = true })
+
+  vim.api.nvim_set_keymap('n', '<leader>zm', ':call VSCodeNotify("workbench.action.toggleZenMode") <CR>', { noremap = true, silent = true })
+
+  vim.api.nvim_set_keymap('n', 'zM', ':call VSCodeNotify("editor.foldAll") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'zR', ':call VSCodeNotify("editor.unfoldAll") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'zc', ':call VSCodeNotify("editor.fold") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'zC', ':call VSCodeNotify("editor.foldRecursively") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'zo', ':call VSCodeNotify("editor.unfold") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'zO', ':call VSCodeNotify("editor.unfoldRecursively") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'za', ':call VSCodeNotify("editor.toggleFold") <CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'zy', ':call VSCodeNotify("editor.foldAllExcept") <CR>', { noremap = true, silent = true })
+
+end
+print("custom mappings loaded!")
+
 M.general = {
   n = {
     ["<C-h>"] = { "<cmd> TmuxNavigateLeft<CR>", "window left" },
