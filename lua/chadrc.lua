@@ -6,11 +6,6 @@ local M = {}
 
 M.ui = {
 	theme = "onedark",
-  statusline = {
-  order = {
-    "mode",
-  },
-}
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },
